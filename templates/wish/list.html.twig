@@ -1,0 +1,73 @@
+{% extends 'base.html.twig' %}
+
+{% block titre %}
+{{ titre }} | {{ parent() }}
+{% endblock %}
+
+{% block main %}
+{% block body %}
+
+
+
+
+<div class=titrePage>{{titre}}</div>
+
+<div class="container">
+
+
+    <div class="row">
+    <!--Colonne de gauche-->
+        <div class="col-md-6">
+        <img src="{{asset('img/wish.jpg')}}" class="img-fluid" alt="Responsive image">
+        </div>
+    <!--Colonne de droite-->
+        <div class="col-md-6">
+
+<div class="table-responsive">
+ <table class="table  table-hover table-bordered">
+
+<thead>
+  <tr>
+    <th>Voeu</th>
+    <th>Date création</th>
+    <th>Détail</th>
+    <th>Voeu réalisé </th>
+ </tr>
+</thead>
+
+{% for wish in wishes %}
+<tbody>
+  <tr>
+    <td>{{wish.title}}</td>
+    <td>{{wish.dateCreated | date('d-m-Y')}}</td>
+    <!--Ouvrir le détail du voeu-->
+    <td>
+    <a href="{{path('wish_detail',{'id':wish.id})}}" class="btn btn-warning">
+               <i class="bi bi-eye"></i>
+                </a>
+    </td>
+    <td>
+    <!--Supprimer un voeu-->
+    <a href="{{path('wish_delete',{'id':wish.id})}}" class="btn btn-danger">
+    <i class="bi bi-x-square"></i></a>
+    </td>
+    
+ </tr>                                                        
+</tbody>
+
+{% endfor %}
+</table>
+
+
+<!--Ajouter un voeu-->   
+    <a href="{{path('wish_add')}}" class="btn btn-success">
+    <i class="bi bi-plus-square"></i>
+    </a>
+
+
+
+
+
+    {% endblock %}
+
+{% endblock %}

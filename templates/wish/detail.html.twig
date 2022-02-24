@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block titre %}
+{{ titre }} | {{ parent() }}
+{% endblock %}
+
+{% block main %}
+
+    {% block body %}
+    
+    <div class="titrePage">{{titre}}</div>
+       
+    <div class="author">
+       <b>Auteur.ice :</b> {{wish.author}}
+    </div>
+
+    <div>
+        <p><b>Voeu</b> : {{wish.title}}</p>    
+        <p>✨ {{wish.description}} ✨</p>
+    </div>
+
+        
+    {% endblock %}
+
+{% endblock %}

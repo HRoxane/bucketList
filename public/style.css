@@ -1,0 +1,28 @@
+body {
+   color:#123C69;
+}
+
+.titrePage {
+    font-family: 'Comfortaa', cursive;
+    font-size: 25px ;
+}
+
+.author {
+    font-family: 'Comfortaa', cursive;
+    color: #05386B ;
+}
+
+.nav-item {
+    font-family: 'Comfortaa', cursive;
+    text-transform: uppercase;
+}
+
+.navbar-brand{
+    font-family: 'Permanent Marker', cursive;    
+    text-transform: uppercase;
+}
+
+.navbar-custom {
+    background-color: #05386B;
+}
+
