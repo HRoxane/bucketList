@@ -43,6 +43,7 @@
     <tr>
       <th>Voeu</th>
       <th>Date création</th>
+      <th>Caégorie</th>
       <th>Détail</th>
       <th>Pimper le voeu</th>
       <th>Voeu réalisé </th>
@@ -54,6 +55,7 @@
     <tr>
       <td>{{wish.title}}</td>
       <td>{{wish.dateCreated | date('d-m-Y')}}</td>
+      <td>{{wish.category.name}}</td>
 
       <!--Ouvrir le détail du voeu-->
       <td>
@@ -68,12 +70,12 @@
                <i class="bi bi-pencil"></i>
                   </a>
       </td>
-      {# <td>
-      <a href="{{path('wish_delete',{'id':wish.id})}}" class="btn btn-info">
-               <i class="bi bi-pencil"></i>
+      <td>
+      <a href="{{path('wish_delete',{'id':wish.id})}}" class="btn btn-danger">
+               <i class="bi bi-x-square"></i>
                   </a>
 
-      </td> #}
+      </td>
 
 
       

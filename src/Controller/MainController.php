@@ -33,7 +33,7 @@ class MainController extends AbstractController
 
 
      /**
-     * @Route("/list", name="list")   
+     * @Route("/", name="list")   
      * */
     public function list(WishRepository $repo): Response
     {
@@ -118,4 +118,20 @@ class MainController extends AbstractController
         ['formulaire'=> $form->createView()]);
 
     }
-  }
+
+    /**
+     * @Route("delete/{id}", name="wish_delete", methods={"GET"})
+     */
+    public function delete(Request $request, Wish $wish, EntityManagerInterface $entityManager): Response
+    {
+        //if ($this->isCsrfTokenValid('delete'.$wish->getId(), $request->request->get('_token'))) {
+            $entityManager->remove($wish);
+            $entityManager->flush();
+        //}
+
+        return $this->redirectToRoute('list', [], Response::HTTP_SEE_OTHER);
+    }
+}
+
+
+

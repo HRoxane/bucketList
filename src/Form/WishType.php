@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Wish;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\ChoiceList\Factory\Cache\ChoiceLabel;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -15,6 +16,7 @@ class WishType extends AbstractType
         $builder
             ->add('title')
             ->add('description')
+            ->add('category', null, ['choice_label' =>'name'])
             ->add('author')
               //->add('isPublished')
             //->add('dateCreated', null, ["widget"=>"single_text"])
