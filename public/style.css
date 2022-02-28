@@ -2,6 +2,10 @@ body {
    color:#123C69;
 }
 
+h1{
+    
+}
+
 .titrePage {
     font-family: 'Comfortaa', cursive;
     font-size: 25px ;
@@ -20,9 +24,5 @@ body {
 .navbar-brand{
     font-family: 'Permanent Marker', cursive;    
     text-transform: uppercase;
-}
-
-.navbar-custom {
-    background-color: #05386B;
 }
 

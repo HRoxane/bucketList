@@ -3,10 +3,14 @@
 namespace App\Controller;
 
 use App\Entity\Wish;
+use App\Form\WishType;
 use App\Repository\WishRepository;
+use DateTime;
+use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -24,6 +28,10 @@ class MainController extends AbstractController
         ]);
     }
 
+
+    //Afficher la liste des voeux
+
+
      /**
      * @Route("/list", name="list")   
      * */
@@ -38,6 +46,9 @@ class MainController extends AbstractController
         ]);
     }
 
+
+    //Voir le détail du voeu
+
     /**
      * @Route("/wishes/{id}", name="wish_detail")
      */
@@ -49,39 +60,62 @@ class MainController extends AbstractController
         ]);
     }
 
+    
+    // Ajouter un voeu
 
-   /**
+    /**
      * @Route("/add/", name="wish_add")
      */
-    public function add(EntityManagerInterface $em): Response
+    public function add(Request $req, EntityManagerInterface $em)
     {
-       //dd($p);
-       // je crée un objet à partir de l'entity
-       $w = new Wish();
-       $w->setTitle("add Test titre");
-       $w->setDescription("add test description");
-       $w->setAuthor("add test auteur");
-       // persist uniquement creation 
-       $em->persist($w);
-       $em->flush(); // SAVE execute la requete SQL
-
-       //dd($p->getId());
-       // rediriger vers home
-       return $this->redirectToRoute('list'); 
-        
+        $wish = new Wish();//Création de l'objet
+        //Création du Form avec assoc. avec $wish
+        $form= $this->createForm(WishType::class,$wish);
+      // auto hydration
+      $form->handleRequest($req);
+      if ($form->isSubmitted() && $form->isValid()) {
+        // $age
+        $age = $form->get('age')->getData();
+        if ($age >= 18) {
+          $this->addFlash(
+            'success',
+            'Votre wish est ajouté :'.$wish->getTitle()
+        );
+          $wish->setIsPublished(true);
+          $wish->setDateCreated(new \DateTime());
+          $em->persist($wish);
+          $em->flush();
+          return $this->redirectToRoute('list');
+        }else{
+          $this->addFlash(
+            'danger',
+            'Vous devez être majeur'
+        );
+        }
+      }
+      // on envoie le formulaire à twig
+      return $this->render('wish/add.html.twig', [
+        'formulaire' => $form->createView(),
+      ]);
     }
+   
 
-/**
- * @Route("/delete/{id}", name="wish_delete")
- */
+    //Mettre à jour le voeu
 
- public function delete(EntityManagerInterface $em, Wish $wish) : Response
- {
+    /**
+     * @Route("/update/{id}", name="wish_update")
+     */
+    public function update(Wish $w, Request $req, EntityManagerInterface $em): Response
+    {
 
-    $em->remove($wish);
-    $em-> flush();
-    return $this->redirectToRoute('list');
+        $form = $this->createForm(WishType::class, $w);
+        $form-> handleRequest($req);
+        if ($form -> isSubmitted()){
+            $em->flush();
+            return $this->redirectToRoute('list');
+        }
+        return $this -> render('wish/update.html.twig',
+        ['formulaire'=> $form->createView()]);
 
- }
-
-}
+    }
+  }
